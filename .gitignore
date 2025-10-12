@@ -1,0 +1,8 @@
+# ignore virtual environment and heavy data
+reverie-env/
+pretrained_models/
+spliced_output/
+transcribed_output/
+*.mp3
+*.wav
+*.mid
