@@ -1,14 +1,5 @@
 [
     {
-        "label": "gradio",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "gradio",
-        "description": "gradio",
-        "detail": "gradio",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -26,22 +17,6 @@
         "documentation": {}
     },
     {
-        "label": "Separator",
-        "importPath": "spleeter.separator",
-        "description": "spleeter.separator",
-        "isExtraImport": true,
-        "detail": "spleeter.separator",
-        "documentation": {}
-    },
-    {
-        "label": "predict_and_save",
-        "importPath": "basic_pitch.inference",
-        "description": "basic_pitch.inference",
-        "isExtraImport": true,
-        "detail": "basic_pitch.inference",
-        "documentation": {}
-    },
-    {
         "label": "Tk",
         "importPath": "tkinter",
         "description": "tkinter",
@@ -55,24 +30,6 @@
         "description": "tkinter",
         "isExtraImport": true,
         "detail": "tkinter",
-        "documentation": {}
-    },
-    {
-        "label": "process_audio",
-        "kind": 2,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "def process_audio(audio_file):\n    try:\n        # 1. Set up folders\n        os.makedirs(\"outputs\", exist_ok=True)\n        os.makedirs(\"transcribed_output\", exist_ok=True)\n        # 2. Separate instrumental + vocals\n        separator = Separator(\"spleeter:2stems\")\n        separator.separate_to_file(audio_file, \"outputs\")\n        # 3. Locate instrumental file\n        base_name = os.path.splitext(os.path.basename(audio_file))[0]",
-        "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "app",
-        "kind": 5,
-        "importPath": "app",
-        "description": "app",
-        "peekOfCode": "app = gr.Interface(\n    fn=process_audio,\n    inputs=gr.Audio(type=\"filepath\", label=\"🎵 Upload an MP3\"),\n    outputs=gr.Textbox(label=\"Status\"),\n    title=\"🎶 Reverie AI: Song → Sheet Music\",\n    description=\"Upload any MP3 file to automatically extract instrumentals and generate sheet music using AI.\",\n    allow_flagging=\"never\"\n)\nif __name__ == \"__main__\":\n    app.launch()",
-        "detail": "app",
         "documentation": {}
     },
     {
