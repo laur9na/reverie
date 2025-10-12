@@ -2,7 +2,7 @@
 title: Reverie
 emoji: 🎵
 sdk: gradio
-sdk_version: 4.0.0
+sdk_version: 5.49.1
 app_file: app.py
 license: mit
 ---
