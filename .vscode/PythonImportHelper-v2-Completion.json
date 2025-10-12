@@ -1,0 +1,96 @@
+[
+    {
+        "label": "gradio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "gradio",
+        "description": "gradio",
+        "detail": "gradio",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Separator",
+        "importPath": "spleeter.separator",
+        "description": "spleeter.separator",
+        "isExtraImport": true,
+        "detail": "spleeter.separator",
+        "documentation": {}
+    },
+    {
+        "label": "Separator",
+        "importPath": "spleeter.separator",
+        "description": "spleeter.separator",
+        "isExtraImport": true,
+        "detail": "spleeter.separator",
+        "documentation": {}
+    },
+    {
+        "label": "predict_and_save",
+        "importPath": "basic_pitch.inference",
+        "description": "basic_pitch.inference",
+        "isExtraImport": true,
+        "detail": "basic_pitch.inference",
+        "documentation": {}
+    },
+    {
+        "label": "Tk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "filedialog",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "process_audio",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def process_audio(audio_file):\n    try:\n        # 1. Set up folders\n        os.makedirs(\"outputs\", exist_ok=True)\n        os.makedirs(\"transcribed_output\", exist_ok=True)\n        # 2. Separate instrumental + vocals\n        separator = Separator(\"spleeter:2stems\")\n        separator.separate_to_file(audio_file, \"outputs\")\n        # 3. Locate instrumental file\n        base_name = os.path.splitext(os.path.basename(audio_file))[0]",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = gr.Interface(\n    fn=process_audio,\n    inputs=gr.Audio(type=\"filepath\", label=\"🎵 Upload an MP3\"),\n    outputs=gr.Textbox(label=\"Status\"),\n    title=\"🎶 Reverie AI: Song → Sheet Music\",\n    description=\"Upload any MP3 file to automatically extract instrumentals and generate sheet music using AI.\",\n    allow_flagging=\"never\"\n)\nif __name__ == \"__main__\":\n    app.launch()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "splice",
+        "kind": 2,
+        "importPath": "splice_song",
+        "description": "splice_song",
+        "peekOfCode": "def splice(song_filename, output_path):\n    \"\"\"Uses Spleeter to separate a song into 4 stems.\"\"\"\n    print(f\"\\nLoading the Spleeter AI model... (this might take a moment)\")\n    separator = Separator(\"spleeter:4stems\")\n    print(f\"Splicing '{song_filename}'... Please wait.\")\n    separator.separate_to_file(song_filename, output_path)\n    print(f\"\\nSuccess! Your separated audio files are in the '{output_path}' folder.\")\nif __name__ == \"__main__\":\n    # Hide the Tkinter root window\n    Tk().withdraw()",
+        "detail": "splice_song",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_FOLDER",
+        "kind": 5,
+        "importPath": "splice_song",
+        "description": "splice_song",
+        "peekOfCode": "OUTPUT_FOLDER = \"spliced_output\"\ndef splice(song_filename, output_path):\n    \"\"\"Uses Spleeter to separate a song into 4 stems.\"\"\"\n    print(f\"\\nLoading the Spleeter AI model... (this might take a moment)\")\n    separator = Separator(\"spleeter:4stems\")\n    print(f\"Splicing '{song_filename}'... Please wait.\")\n    separator.separate_to_file(song_filename, output_path)\n    print(f\"\\nSuccess! Your separated audio files are in the '{output_path}' folder.\")\nif __name__ == \"__main__\":\n    # Hide the Tkinter root window",
+        "detail": "splice_song",
+        "documentation": {}
+    }
+]
