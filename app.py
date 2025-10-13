@@ -6,44 +6,57 @@ from spleeter.separator import Separator
 from basic_pitch.inference import predict_and_save
 
 
+def download_model():
+    os.makedirs("models", exist_ok=True)
+    model_dir = "models/2stems"
+    model_tar_path = "models/2stems.tar.gz"
+
+    # Skip download if model already exists
+    if os.path.exists(os.path.join(model_dir, "pretrained_model")):
+        print("Model already exists, skipping download.")
+        return model_dir
+
+    print("Downloading and extracting Spleeter model...")
+
+    # Stable direct GitHub link to 2stems.tar.gz
+    model_url = "https://github.com/deezer/spleeter/releases/download/v1.4.0/2stems.tar.gz"
+
+    # Handle redirects manually to avoid 404
+    opener = urllib.request.build_opener()
+    opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+    urllib.request.install_opener(opener)
+
+    urllib.request.urlretrieve(model_url, model_tar_path)
+    print("Download complete!")
+
+    # Extract into models/
+    with tarfile.open(model_tar_path, "r:gz") as tar:
+        tar.extractall("models")
+
+    print("Extraction complete!")
+    return model_dir
+
+
 def process_audio(audio_file):
     try:
-        # 1. Set up folders
-        os.makedirs("models", exist_ok=True)
         os.makedirs("outputs", exist_ok=True)
         os.makedirs("transcribed_output", exist_ok=True)
 
-        # 2. Download + extract Spleeter model if missing
-        model_dir = "models/2stems"
-        model_tar_path = "models/2stems.tar.gz"
+        # 1. Ensure model is ready
+        model_dir = download_model()
 
-        if not os.path.exists(os.path.join(model_dir, "pretrained_model")):
-            print("Downloading and extracting Spleeter model...")
-            urllib.request.urlretrieve(
-                "https://huggingface.co/spaces/akhaliq/Spleeter/resolve/main/2stems.tar.gz",
-                model_tar_path
-            )
-
-            with tarfile.open(model_tar_path, "r:gz") as tar:
-                tar.extractall("models")
-
-            print("Model downloaded and extracted!")
-
-        # 3. Initialize Separator
+        # 2. Initialize Separator
         separator = Separator(os.path.join(model_dir, "pretrained_model"))
 
-        # 4. Separate instrumental + vocals
+        # 3. Separate instrumental + vocals
         separator.separate_to_file(audio_file, "outputs")
 
-        # 5. Locate instrumental file
+        # 4. Locate instrumental
         base_name = os.path.splitext(os.path.basename(audio_file))[0]
         instrumental_path = f"outputs/{base_name}/other.wav"
 
-        # 6. Transcribe instrumental to MIDI + sheet music
-        predict_and_save(
-            [instrumental_path],
-            "transcribed_output"
-        )
+        # 5. Transcribe instrumental → MIDI
+        predict_and_save([instrumental_path], "transcribed_output")
 
         midi_file = f"transcribed_output/{base_name}_basic_pitch.mid"
         return f"Success! Transcribed and saved as {midi_file}"
@@ -52,7 +65,7 @@ def process_audio(audio_file):
         return f"Error: {str(e)}"
 
 
-# Gradio app setup
+# Gradio app
 app = gr.Interface(
     fn=process_audio,
     inputs=gr.Audio(type="filepath", label="Upload an MP3"),
@@ -61,7 +74,6 @@ app = gr.Interface(
     description="Upload an MP3 to extract instrumentals and generate sheet music using AI.",
     allow_flagging="never"
 )
-
 
 if __name__ == "__main__":
     app.launch()
