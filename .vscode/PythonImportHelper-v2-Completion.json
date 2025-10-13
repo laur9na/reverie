@@ -1,5 +1,14 @@
 [
     {
+        "label": "gradio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "gradio",
+        "description": "gradio",
+        "detail": "gradio",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -9,11 +18,36 @@
         "documentation": {}
     },
     {
+        "label": "urllib.request",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib.request",
+        "description": "urllib.request",
+        "detail": "urllib.request",
+        "documentation": {}
+    },
+    {
         "label": "Separator",
         "importPath": "spleeter.separator",
         "description": "spleeter.separator",
         "isExtraImport": true,
         "detail": "spleeter.separator",
+        "documentation": {}
+    },
+    {
+        "label": "Separator",
+        "importPath": "spleeter.separator",
+        "description": "spleeter.separator",
+        "isExtraImport": true,
+        "detail": "spleeter.separator",
+        "documentation": {}
+    },
+    {
+        "label": "predict_and_save",
+        "importPath": "basic_pitch.inference",
+        "description": "basic_pitch.inference",
+        "isExtraImport": true,
+        "detail": "basic_pitch.inference",
         "documentation": {}
     },
     {
@@ -30,6 +64,24 @@
         "description": "tkinter",
         "isExtraImport": true,
         "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "process_audio",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def process_audio(audio_file):\n    try:\n        # 1. Set up folders\n        os.makedirs(\"models\", exist_ok=True)\n        os.makedirs(\"outputs\", exist_ok=True)\n        os.makedirs(\"transcribed_output\", exist_ok=True)\n        # 2. Ensure Spleeter model is available locally\n        model_path = \"models/2stems.tar.gz\"\n        if not os.path.exists(model_path):\n            print(\"Downloading Spleeter 2-stem model...\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = gr.Interface(\n    fn=process_audio,\n    inputs=gr.Audio(type=\"filepath\", label=\"Upload an MP3\"),\n    outputs=[\n        gr.File(label=\"Download Transcribed MIDI\"),\n        gr.Textbox(label=\"Status\")\n    ],\n    title=\"Reverie AI: Song to Sheet Music\",\n    description=(\n        \"Upload any MP3 file to automatically extract instrumentals \"",
+        "detail": "app",
         "documentation": {}
     },
     {
