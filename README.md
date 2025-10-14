@@ -1,12 +1,3 @@
----
-title: Reverie
-emoji: 🎵
-sdk: gradio
-sdk_version: 5.49.1
-app_file: app.py
-license: mit
----
-
 # REVERIE
 Turn your favorite songs into sheet music using AI
 
