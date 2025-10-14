@@ -18,12 +18,21 @@
         "documentation": {}
     },
     {
-        "label": "urllib.request",
+        "label": "tempfile",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "urllib.request",
-        "description": "urllib.request",
-        "detail": "urllib.request",
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
         "documentation": {}
     },
     {
@@ -51,6 +60,14 @@
         "documentation": {}
     },
     {
+        "label": "ICASSP_2022_MODEL_PATH",
+        "importPath": "basic_pitch",
+        "description": "basic_pitch",
+        "isExtraImport": true,
+        "detail": "basic_pitch",
+        "documentation": {}
+    },
+    {
         "label": "Tk",
         "importPath": "tkinter",
         "description": "tkinter",
@@ -71,7 +88,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def process_audio(audio_file):\n    try:\n        # 1. Set up folders\n        os.makedirs(\"models\", exist_ok=True)\n        os.makedirs(\"outputs\", exist_ok=True)\n        os.makedirs(\"transcribed_output\", exist_ok=True)\n        # 2. Ensure Spleeter model is available locally\n        model_path = \"models/2stems.tar.gz\"\n        if not os.path.exists(model_path):\n            print(\"Downloading Spleeter 2-stem model...\")",
+        "peekOfCode": "def process_audio(audio_file):\n    try:\n        if audio_file is None:\n            return \"Error: Please upload an audio file.\"\n        # 1. Create temp + output directories\n        tmp_dir = tempfile.mkdtemp()\n        outputs_dir = os.path.join(tmp_dir, \"outputs\")\n        transcribed_dir = os.path.join(tmp_dir, \"transcribed_output\")\n        os.makedirs(outputs_dir, exist_ok=True)\n        os.makedirs(transcribed_dir, exist_ok=True)",
         "detail": "app",
         "documentation": {}
     },
@@ -80,7 +97,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = gr.Interface(\n    fn=process_audio,\n    inputs=gr.Audio(type=\"filepath\", label=\"Upload an MP3\"),\n    outputs=[\n        gr.File(label=\"Download Transcribed MIDI\"),\n        gr.Textbox(label=\"Status\")\n    ],\n    title=\"Reverie AI: Song to Sheet Music\",\n    description=(\n        \"Upload any MP3 file to automatically extract instrumentals \"",
+        "peekOfCode": "app = gr.Interface(\n    fn=process_audio,\n    inputs=gr.Audio(type=\"filepath\", label=\"UPLOAD MP3 HERE\"),\n    outputs=gr.Textbox(label=\"STATUS\"),\n    title=\"REVERIE AI - TURN ANY SONG INTO SHEET MUSIC\",\n    description=(\n        \"<p>1. Upload an MP3 file.</p>\"\n        \"<p>2. The app separates vocals, drums, bass, and instruments, then converts the instrumental stem into a MIDI file.</p>\"\n        \"<p>3. The MIDI file will be automatically saved to your Downloads folder (can take around 1-3 minutes).</p>\"\n        \"<p>4. Download <a href='https://musescore.org' target='_blank'>MuseScore</a>.</p>\"",
         "detail": "app",
         "documentation": {}
     },
