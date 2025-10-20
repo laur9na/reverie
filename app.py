@@ -52,7 +52,7 @@ def process_audio(audio_file):
         downloads_path = os.path.join(os.path.expanduser("~"), "Downloads", final_name)
         shutil.copy(midi_file, downloads_path)
 
-        return f"Your MIDI file has been saved to your Downloads folder as:\n\n{downloads_path}"
+        return f"Your MIDI file has been saved to your Downloads folder! \n{downloads_path}"
 
     except Exception as e:
         return f"Error: {str(e)}"
